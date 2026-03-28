@@ -10,11 +10,8 @@ arch:
   - i386
 services:
   - mqtt:need
-homeassistant_api: false
-deny_dbus: true
-deny_docker: true
 map:
-  - config
+  - config:rw
 startup: system
 boot: auto
 options:
@@ -23,5 +20,3 @@ options:
 schema:
   mqtt_username: str
   mqtt_password: str
-ports:
-  - 1883/tcp

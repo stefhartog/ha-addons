@@ -2,19 +2,21 @@ ARG BUILD_FROM=ghcr.io/home-assistant/base:latest
 
 FROM ${BUILD_FROM}
 
-# Install Python build essentials and dependencies
+# Install Python, git and build essentials
 RUN apk add --no-cache \
     python3 \
     py3-pip \
     build-base \
-    python3-dev
+    python3-dev \
+    git
 
-# Copy application code
-COPY . /app
+# Clone snoozefest source and install
+RUN git clone https://github.com/stefhartog/snoozefest.git /app
 WORKDIR /app
-
-# Install snoozefest and dependencies
 RUN pip install --no-cache-dir -e .
 
-# Run the daemon
-CMD ["snoozefest", "--config", "/config/snoozefest.json", "run"]
+# Copy addon entry point
+COPY run.sh /run.sh
+RUN chmod a+x /run.sh
+
+CMD ["/run.sh"]
