@@ -13,7 +13,7 @@ RUN apk add --no-cache \
 # Clone snoozefest source and install
 RUN git clone https://github.com/stefhartog/snoozefest.git /app
 WORKDIR /app
-RUN pip install --no-cache-dir -e .
+RUN pip install --no-cache-dir --break-system-packages .
 
 # Copy addon entry point
 COPY run.sh /run.sh
