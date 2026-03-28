@@ -1,28 +1,27 @@
-#!/bin/bash
-
-# Home Assistant add-on entry point for Snoozefest
+#!/usr/bin/with-contenv bashio
 
 set -e
 
-# Configuration file path
-CONFIG_FILE="/config/snoozefest.json"
+CONFIG_FILE="/tmp/snoozefest.json"
+MQTT_HOST="$(bashio::services mqtt "host")"
+MQTT_PORT="$(bashio::services mqtt "port")"
+MQTT_USERNAME="$(bashio::config "mqtt_username")"
+MQTT_PASSWORD="$(bashio::config "mqtt_password")"
 
-# Create default config if it doesn't exist
-if [ ! -f "$CONFIG_FILE" ]; then
-    cat > "$CONFIG_FILE" << 'EOF'
+cat > "$CONFIG_FILE" << EOF
 {
-  "mqtt_host": "homeassistant",
-  "mqtt_port": 1883,
-  "mqtt_username": "mqtt",
-  "mqtt_password": "password",
+  "mqtt_host": "$MQTT_HOST",
+  "mqtt_port": $MQTT_PORT,
+  "mqtt_username": "$MQTT_USERNAME",
+  "mqtt_password": "$MQTT_PASSWORD",
   "mqtt_topic_prefix": "snoozefest",
   "mqtt_client_id": "snoozefest-addon",
+  "homeassistant_discovery_prefix": "homeassistant",
+  "timezone": "UTC",
   "tick_seconds": 1,
+  "default_snooze_minutes": 10,
   "data_file": "/config/snoozefest_data.json"
 }
 EOF
-    echo "Created default config at $CONFIG_FILE"
-fi
 
-# Run snoozefest daemon
 exec snoozefest --config "$CONFIG_FILE" run
