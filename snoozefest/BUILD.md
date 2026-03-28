@@ -11,7 +11,7 @@ This guide is for developers who want to build the Snoozefest add-on locally for
 ## Build Locally
 
 ```bash
-cd addon/
+cd ha-addons/snoozefest
 
 # Build image
 docker build \
@@ -42,12 +42,16 @@ Create `./config/snoozefest.json`:
 
 ```json
 {
-  "mqtt_broker": "mqtt://homeassistant.local:1883",
+  "mqtt_host": "homeassistant.local",
+  "mqtt_port": 1883,
   "mqtt_username": "mqtt",
   "mqtt_password": "password",
   "mqtt_topic_prefix": "snoozefest",
   "mqtt_client_id": "snoozefest-addon-test",
-  "tick_interval": 1,
+  "homeassistant_discovery_prefix": "homeassistant",
+  "timezone": "UTC",
+  "tick_seconds": 1,
+  "default_snooze_minutes": 10,
   "data_file": "/config/snoozefest_data.json"
 }
 ```

@@ -7,6 +7,7 @@ MQTT_HOST="$(bashio::services mqtt "host")"
 MQTT_PORT="$(bashio::services mqtt "port")"
 MQTT_USERNAME="$(bashio::config "mqtt_username")"
 MQTT_PASSWORD="$(bashio::config "mqtt_password")"
+TIMEZONE="${TZ:-UTC}"
 
 cat > "$CONFIG_FILE" << EOF
 {
@@ -17,7 +18,7 @@ cat > "$CONFIG_FILE" << EOF
   "mqtt_topic_prefix": "snoozefest",
   "mqtt_client_id": "snoozefest-addon",
   "homeassistant_discovery_prefix": "homeassistant",
-  "timezone": "UTC",
+  "timezone": "$TIMEZONE",
   "tick_seconds": 1,
   "default_snooze_minutes": 10,
   "data_file": "/config/snoozefest_data.json"

@@ -23,9 +23,15 @@ Default settings:
 
 ## Persistent Storage
 
-- Configuration: `/config/snoozefest.json`
+- Runtime configuration: `/tmp/snoozefest.json` (generated at startup)
 - State data: `/config/snoozefest_data.json`
-- Both are retained across add-on restarts
+- Only state data is retained across add-on restarts
+
+## Build Source Behavior
+
+- The image clones Snoozefest source from GitHub during build.
+- The Dockerfile is cache-busted by `config.yaml`, so bumping add-on version triggers a fresh source clone on rebuild.
+- Build logs print the cloned commit SHA for verification.
 
 ## Home Assistant Integration
 
