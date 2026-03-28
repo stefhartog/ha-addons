@@ -10,8 +10,12 @@ RUN apk add --no-cache \
     python3-dev \
     git
 
+# Cache-bust source clone when add-on version changes in config.yaml.
+COPY config.yaml /tmp/addon-config.yaml
+
 # Clone snoozefest source and install
-RUN git clone https://github.com/stefhartog/snoozefest.git /app
+RUN git clone https://github.com/stefhartog/snoozefest.git /app \
+    && git -C /app rev-parse HEAD
 WORKDIR /app
 RUN pip install --no-cache-dir --break-system-packages .
 
