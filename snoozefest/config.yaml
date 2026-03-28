@@ -1,6 +1,6 @@
 name: "Snoozefest"
 description: "Local alarm and timer service with Home Assistant MQTT discovery"
-version: "0.1.0"
+version: "0.1.1"
 slug: "snoozefest"
 init: false
 arch:
