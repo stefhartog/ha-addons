@@ -20,6 +20,7 @@ Default settings:
 - **MQTT Broker**: `mqtt://homeassistant:1883`
 - **Topic Prefix**: `snoozefest` (production)
 - **Client ID**: `snoozefest-addon`
+- **Timer Add Time Seconds**: `60`
 
 ## Persistent Storage
 
@@ -37,7 +38,7 @@ Default settings:
 
 Once running, Snoozefest automatically publishes MQTT discovery payloads:
 
-- One manager device: `Snoozefest` (Purge All, Add Timer, Add Alarm buttons)
+- One manager device: `Snoozefest` (Purge All, Add Timer, Add Alarm buttons, Timer Add Time Seconds setting)
 - One device per active alarm: `Snoozefest Alarm - <label>`
 - One device per active timer: `Snoozefest Timer - <label>`
 

@@ -5,5 +5,6 @@
   "mqtt_topic_prefix": "snoozefest",
   "mqtt_client_id": "snoozefest-addon",
   "tick_interval": 1,
+  "timer_add_seconds": 60,
   "data_file": "/config/snoozefest_data.json"
 }

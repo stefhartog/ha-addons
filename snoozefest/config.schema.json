@@ -3,5 +3,6 @@
   "mqtt_username": "mqtt",
   "mqtt_password": "password",
   "mqtt_topic_prefix": "snoozefest",
-  "mqtt_client_id": "snoozefest-addon"
+  "mqtt_client_id": "snoozefest-addon",
+  "timer_add_seconds": 60
 }
