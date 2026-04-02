@@ -29,5 +29,5 @@ Start simple with just the add-on, then layer on UI/voice when you are ready.
 
 ## Documentation
 
-- Add-on usage and config: `snoozefest/README.md`
-- Main project docs and architecture: `../snoozefest/README.md`
+- Add-on usage and config: https://github.com/stefhartog/snoozefest/
+- Main project docs and architecture: https://github.com/stefhartog/snoozefest/
