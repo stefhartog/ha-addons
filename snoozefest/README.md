@@ -1,68 +1,57 @@
 # Snoozefest Home Assistant Add-on
 
-Local alarm and timer service with MQTT discovery for Home Assistant.
+Snoozefest is a local-first alarm and timer brain for Home Assistant.
 
-## Installation
+It runs the scheduler, keeps persistent state, and publishes MQTT discovery entities so you can control alarms and timers directly in Home Assistant.
 
-1. Add this repository to Home Assistant Add-ons:
-   - Go to Settings → System → Add-ons → Repositories
-   - Add the repository URL (when published)
-   - Refresh and search for "Snoozefest"
-   - Click Install
+## What you get with just the add-on
 
-2. Start the add-on and check the logs
+- one manager device (`Snoozefest`) with Add Alarm/Add Timer/Purge controls
+- one device per alarm
+- one device per timer
+- reliable local state in `/config/snoozefest_data.json`
+
+You can use Snoozefest immediately with no custom dashboard or voice setup.
+
+## Quick install
+
+1. Add repository: Settings -> System -> Add-ons -> Repositories
+2. Add: `https://github.com/stefhartog/ha-addons`
+3. Install `Snoozefest`
+4. Start add-on
+5. Confirm logs show the daemon is running and MQTT connected
 
 ## Configuration
 
-The add-on configures itself automatically using Home Assistant's built-in MQTT broker.
+The add-on auto-configures against Home Assistant's internal MQTT broker by default.
 
-Default settings:
-- **MQTT Broker**: `mqtt://homeassistant:1883`
-- **Topic Prefix**: `snoozefest` (production)
-- **Client ID**: `snoozefest-addon`
-- **Timer Add Time Seconds**: `60`
+Common option:
 
-## Persistent Storage
+- `timer_add_seconds` (default `60`): how much time the Add Time action adds to timers
 
-- Runtime configuration: `/tmp/snoozefest.json` (generated at startup)
-- State data: `/config/snoozefest_data.json`
-- Only state data is retained across add-on restarts
+## Optional upgrades
 
-## Build Source Behavior
+After core add-on setup, you can optionally add:
 
-- The image clones Snoozefest source from GitHub during build.
-- The Dockerfile is cache-busted by `config.yaml`, so bumping add-on version triggers a fresh source clone on rebuild.
-- Build logs print the cloned commit SHA for verification.
+1. Dashboard UI
+- Use the cards in the main Snoozefest repo `dashboard/` folder for mobile-friendly alarm/timer control.
 
-## Home Assistant Integration
+2. Voice control
+- Use `voice/` automations for deterministic local commands.
+- Optionally expose LLM wrapper scripts for richer natural-language handling.
 
-Once running, Snoozefest automatically publishes MQTT discovery payloads:
+## Persistence
 
-- One manager device: `Snoozefest` (Purge All, Add Timer, Add Alarm buttons, Timer Add Time Seconds setting)
-- One device per active alarm: `Snoozefest Alarm - <label>`
-- One device per active timer: `Snoozefest Timer - <label>`
+- Runtime config is generated in `/tmp/snoozefest.json`
+- Persistent scheduler state lives in `/config/snoozefest_data.json`
 
-All devices and entities are scoped to the `snoozefest/` MQTT namespace.
+## Notes for testers
 
-See [main README](../README.md) for operating model and command topics.
+- Add-on image pulls Snoozefest source from GitHub at build time.
+- Bumping add-on version triggers rebuild and fresh source clone.
+- Build logs include cloned commit SHA.
 
-## Migrating from Workstation Dev
+## More docs
 
-1. **Export dev state** (on workstation):
-   ```bash
-   # Copy dev state file
-   copy snoozefest_data_dev.json snoozefest_data.json
-   ```
-
-2. **Import to add-on**:
-   - Stop the add-on
-   - Copy `snoozefest_data.json` to `/config/` via SFTP or HA file editor
-   - Restart the add-on
-
-3. **Verify**:
-   - Check HA MQTT Explorer for `snoozefest/` topics
-   - Verify all alarms and timers appear in Home Assistant
-
-## Support
-
-See [main README](../README.md) for full operator documentation and command reference.
+- Project overview: `../../snoozefest/README.md`
+- Migration notes: `../../snoozefest/MIGRATION.md`
