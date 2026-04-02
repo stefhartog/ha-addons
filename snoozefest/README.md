@@ -21,6 +21,15 @@ You can use Snoozefest immediately with no custom dashboard or voice setup.
 4. Start add-on
 5. Confirm logs show the daemon is running and MQTT connected
 
+## Prerequisite: MQTT broker
+
+Snoozefest requires a working MQTT broker.
+
+- Recommended: Home Assistant Mosquitto broker add-on
+- Alternative: your own external MQTT server
+
+Home Assistant MQTT integration must be configured to the same broker so Snoozefest discovery entities appear.
+
 ## Configuration
 
 The add-on auto-configures against Home Assistant's internal MQTT broker by default.
@@ -35,6 +44,19 @@ After core add-on setup, you can optionally add:
 
 1. Dashboard UI
 - Use the cards in the main Snoozefest repo `dashboard/` folder for mobile-friendly alarm/timer control.
+- Dashboard YAML uses these non-standard Lovelace cards/plugins:
+	- `custom:button-card`
+	- `custom:auto-entities`
+	- `custom:config-template-card`
+	- `custom:snoozefest-multiline-text-input-card` (from Snoozefest `dashboard/snoozefest_multiline_text_input.js`)
+- Install external cards via HACS (or manual resources) before importing Snoozefest YAML cards.
+- Copy custom card JS files into Home Assistant `www` (recommended: `/config/www/snoozefest/`):
+	- `dashboard/snoozefest_entity_card.js`
+	- `dashboard/snoozefest_multiline_text_input.js`
+- In Home Assistant, go to Dashboards -> Resources and add as `module`:
+	- `/local/snoozefest/snoozefest_entity_card.js`
+	- `/local/snoozefest/snoozefest_multiline_text_input.js`
+- Reload dashboard resources, then import/use the YAML cards from `dashboard/`.
 
 2. Voice control
 - Use `voice/` automations for deterministic local commands.
